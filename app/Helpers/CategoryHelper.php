@@ -10,9 +10,9 @@ class CategoryHelper extends Model
 {
     public static function home()
     {
-        return (Cache::remember('categoryTableHome', 60, function() {
+        return (Cache::remember('categoryTableHome', 60, function () {
             return (new Category)
-            ->get();
+                ->get();
         }));
     }
 }

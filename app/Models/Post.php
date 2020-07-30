@@ -4,8 +4,8 @@ namespace App\Models;
 
 use App\Suport\Cropper;
 use App\User;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
@@ -27,21 +27,25 @@ class Post extends Model
         }
     }
 
-    public function scopeBySlug(Builder $builder, string $slug){
+    public function scopeBySlug(Builder $builder, string $slug)
+    {
         return $builder->where('slug', $slug);
     }
 
-    public function scopeNotPost(Builder $builder, ?array $id){
-        if(!empty($id)){
+    public function scopeNotPost(Builder $builder, ?array $id)
+    {
+        if (!empty($id)) {
             return $builder->whereNotIn('id', $id);
         }
     }
 
-    public function scopeByUser(Builder $builder, int $user){
+    public function scopeByUser(Builder $builder, int $user)
+    {
         return $builder->where('user_id', $user);
     }
 
-    public function scopeByTags(Builder $builder, array $tags){
+    public function scopeByTags(Builder $builder, array $tags)
+    {
         if (!empty($tags)) {
             $builder->join('post_has_tags', 'post_has_tags.tag_id', '=', 'posts.id')
                 ->join('tags', 'tags.id', "=", "post_has_tags.tag_id")
@@ -73,22 +77,25 @@ class Post extends Model
 
     public function scopeOrder(Builder $builder, $order = false)
     {
-        if($order){
+        if ($order) {
             return $builder
                 ->orderBy('created_at', 'DESC')
                 ->orderBy('id', 'DESC');
         }
     }
 
-    private function getImage(){
-        return "posts/". (($this->id % 17) + 1) . ".jpg";
-    }
-
-    public function getImageAttribute(){
+    public function getImageAttribute()
+    {
         return $this->cover ?? asset("img/" . $this->getImage());
     }
 
-    public function thumb(int $width, int $height = null){
+    private function getImage()
+    {
+        return "posts/" . (($this->id % 17) + 1) . ".jpg";
+    }
+
+    public function thumb(int $width, int $height = null)
+    {
         return asset('frontend/img/' . Cropper::thumb(public_path('frontend/img/' . $this->getImage()), $width, $height));
     }
 }

@@ -20,15 +20,15 @@ class SiteController
         $principal = null;
 
         foreach ($postsAll as $k => $v) {
-            if($k == 0){
+            if ($k == 0) {
                 $last = $v;
-            } else if($k < 5){
+            } else if ($k < 5) {
                 $banners[] = $v;
-            } else if($k == 5){
+            } else if ($k == 5) {
                 $principal = $v;
-            } else if($k < 11){
+            } else if ($k < 11) {
                 $posts[] = $v;
-            } else{
+            } else {
                 $latests[] = $v;
             }
         }
@@ -42,7 +42,8 @@ class SiteController
         ]);
     }
 
-    public function category($slug){
+    public function category($slug)
+    {
         $posts = PostHelper::byCategory($slug);
 
         return view('frontend.posts', [
@@ -52,7 +53,8 @@ class SiteController
         ]);
     }
 
-    public function posts(Request $request){
+    public function posts(Request $request)
+    {
         $posts = PostHelper::byPost($request->all());
 
         return view('frontend.posts', [
@@ -62,20 +64,23 @@ class SiteController
         ]);
     }
 
-    public function contact(){
+    public function contact()
+    {
         return view('frontend.contact');
     }
 
-    public function about(){
+    public function about()
+    {
         return view('frontend.about', [
             'latests' => PostHelper::latest(),
         ]);
     }
 
-    public function post($slug){
+    public function post($slug)
+    {
         $post = PostHelper::post($slug);
         $comments = PostHelper::comments($post);
-        
+
         return view('frontend.post', [
             'latests' => PostHelper::latest(collect([$post])),
             'post' => $post,
@@ -83,7 +88,8 @@ class SiteController
         ]);
     }
 
-    public function postUsuario($user){
+    public function postUsuario($user)
+    {
         $posts = PostHelper::byUser($user);
 
         return view('frontend.posts', [

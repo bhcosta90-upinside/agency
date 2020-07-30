@@ -19,10 +19,11 @@ class ApiController
         return ['msg' => __('E-mail cadastrado com sucesso'), "id" => $obj->id];
     }
 
-    public function commentary(string $slug, Request $request) {
+    public function commentary(string $slug, Request $request)
+    {
         $post = PostHelper::post($slug);
         $user = User::whereEmail($request->input('email'))->first();
-        if(empty($user)){
+        if (empty($user)) {
             $user = User::create([
                 "name" => $request->input('name'),
                 "email" => $request->input('email'),
@@ -46,7 +47,7 @@ class ApiController
             "subject" => $request->subject,
             "message" => $request->message
         ];
-        
+
         Mail::send(new ContactEmail($data));
 
         return ['msg' => __('Contato cadastrado com sucesso')];

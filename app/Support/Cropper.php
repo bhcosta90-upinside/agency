@@ -11,6 +11,6 @@ class Cropper
         $cropper = new C(public_path('frontend/img/cache'));
         $pathThumb = $cropper->make($path, $width, $height);
         $file = collect(explode('/', $pathThumb))->last();
-        return 'cache/'.$file;
+        return 'cache/' . $file;
     }
 }
