@@ -14,4 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::post('newsletter', 'SiteController@newsletter')->name('api.newsletter');
+Route::post('newsletter', 'ApiController@newsletter')->name('api.newsletter');
+Route::post('commentary/{slug}', 'ApiController@commentary')->name('api.commentary');
+Route::post('contact', 'ApiController@contact')->name('api.contact');

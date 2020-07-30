@@ -19,9 +19,6 @@
 
         <!-- About Author -->
         <div class="blog-post-author mt-100 d-flex">
-            <div class="author-thumbnail">
-                <img src="img/bg-img/b6.jpg" alt="">
-            </div>
             <div class="author-info">
                 <div class="line"></div>
                 <span class="author-role">{{ __('Author') }}</span>
@@ -46,7 +43,7 @@
                             <!-- Comment Meta -->
                             <div class="comment-meta">
                                 <a href="#" class="post-date">{{ date('M d', strtotime($comment->created_at))}}</a>
-                                <p><a href="#" class="post-author">{{ $comment->user->name }}</a></p>
+                                <p><a href="{{ route('post-user', $post->user->id) }}" class="post-author">{{ $comment->user->name }}</a></p>
                                 <p>{{ $comment->comment }}</p>
                             </div>
                         </div>
@@ -61,7 +58,8 @@
         <div class="post-a-comment-area mt-70">
             <h5>{{ __('Leave a commentary') }}</h5>
             <!-- Reply Form -->
-            <form action="#" method="post">
+            <form action="{{ route('api.commentary', $post->slug) }}" id='frmCommentary' method="post">
+                @csrf
                 <div class="row">
                     <div class="col-12 col-md-6">
                         <div class="group">

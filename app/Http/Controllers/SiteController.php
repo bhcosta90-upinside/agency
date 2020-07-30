@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\PostHelper;
-use App\Http\Requests\NewsletterRequest;
-use App\Models\Newsletter;
 use App\Models\Post;
 use Illuminate\Http\Request;
 
@@ -43,13 +41,6 @@ class SiteController
         ]);
     }
 
-    public function newsletter(NewsletterRequest $request)
-    {
-        $obj = Newsletter::create($request->all());
-
-        return ['msg' => __('E-mail cadastrado com sucesso'), "id" => $obj->id];
-    }
-
     public function category($slug){
         return view('frontend.posts', [
             'latests' => PostHelper::latest(),
@@ -64,6 +55,18 @@ class SiteController
         ]);
     }
 
+    public function contact(){
+        return view('frontend.contact', [
+            'latests' => PostHelper::latest(),
+        ]);
+    }
+
+    public function about(){
+        return view('frontend.about', [
+            'latests' => PostHelper::latest(),
+        ]);
+    }
+
     public function post($slug){
         $post = PostHelper::post($slug);
         $comments = PostHelper::comments($post);
@@ -72,6 +75,13 @@ class SiteController
             'latests' => PostHelper::latest(),
             'post' => $post,
             'comments' => $comments,
+        ]);
+    }
+
+    public function postUsuario($user){
+        return view('frontend.posts', [
+            'latests' => PostHelper::latest(),
+            'posts' => PostHelper::byUser($user)
         ]);
     }
 }

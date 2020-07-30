@@ -30,6 +30,11 @@ class Post extends Model
     public function scopeBySlug(Builder $builder, string $slug){
         return $builder->where('slug', $slug);
     }
+
+    public function scopeByUser(Builder $builder, int $user){
+        return $builder->where('user_id', $user);
+    }
+
     public function scopeByTags(Builder $builder, array $tags){
         if (!empty($tags)) {
             $builder->join('post_has_tags', 'post_has_tags.tag_id', '=', 'posts.id')
@@ -50,7 +55,9 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->morphMany(Comments::class, 'item');
+        return $this->morphMany(Comments::class, 'item')
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('id', 'DESC');
     }
 
     public function user()

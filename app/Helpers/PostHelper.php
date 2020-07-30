@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Cache;
 class PostHelper extends Model
 {
     const LIMIT = 5;
-    const CACHE = 60;
+    const CACHE = 0;
 
     public static function latest()
     {
@@ -41,6 +41,17 @@ class PostHelper extends Model
             ->with(['categories', 'comments.user', 'user'])
             ->order(true)
             ->first();
+        }));
+    }
+
+    public static function byUser(int $user){
+        return (Cache::remember('postUserTableLatest' . $user, self::CACHE, function() use($user) {
+            return (new Post)
+            ->select(["posts.*"])
+            ->byUser($user)
+            ->with(['categories', 'comments.user', 'user'])
+            ->order(true)
+            ->paginate(self::LIMIT);
         }));
     }
 

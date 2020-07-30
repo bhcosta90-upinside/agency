@@ -1,5 +1,5 @@
 $(function(){
-    $('.newsletterForm').submit(function(e){
+    $('.newsletterForm, #frmCommentary, #frmContact').submit(function(e){
         e.preventDefault();
         const form = $(this);
 
