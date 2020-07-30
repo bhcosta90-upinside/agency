@@ -9,11 +9,10 @@
                     <div class="breaking-news-area">
                         <div id="breakingNewsTicker" class="ticker">
                             <ul>
-                                <li><a href="#">Hello World!</a></li>
-                                <li><a href="#">Hello Universe!</a></li>
-                                <li><a href="#">Hello Original!</a></li>
-                                <li><a href="#">Hello Earth!</a></li>
-                                <li><a href="#">Hello Colorlib!</a></li>
+                                <li><a href="{{ route('home') }}">{{ __('Hello World!') }}</a></li>
+                                <li><a href="{{ route('home') }}">{{ __('Hello Universe!') }}</a></li>
+                                <li><a href="{{ route('home') }}">{{ __('Hello Original!') }}</a></li>
+                                <li><a href="{{ route('home') }}">{{ __('Hello Earth!') }}</a></li>
                             </ul>
                         </div>
                     </div>
@@ -44,7 +43,7 @@
         <div class="container h-100">
             <div class="row h-100 align-items-center">
                 <div class="col-12">
-                    <a href="index.html" class="original-logo"><img src="{{ asset('frontend/img/core-img/logo.png') }}"
+                    <a href="{{ route('home') }}" class="original-logo"><img src="{{ asset('frontend/img/core-img/logo.png') }}"
                                                                     alt=""></a>
                 </div>
             </div>

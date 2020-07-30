@@ -190,11 +190,12 @@
                     @endisset
 
                     <!-- Widget Area -->
+                    @isset($tags)
                     <div class="sidebar-widget-area">
                         <h5 class="title">Tags</h5>
                         <div class="widget-content">
                             <ul class="tags">
-                                @foreach (App\Helpers\TagHelper::home(request('tags')) as $tag)
+                                @foreach ($tags as $tag)
                                     <li>
                                         <a class='{{ $tag->active ? "active" : "" }}' 
                                             href="{{ route('posts', [
@@ -207,6 +208,7 @@
                             </ul>
                         </div>
                     </div>
+                    @endif
                 </div>
             </div>
         </div>

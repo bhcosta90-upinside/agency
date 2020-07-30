@@ -31,6 +31,12 @@ class Post extends Model
         return $builder->where('slug', $slug);
     }
 
+    public function scopeNotPost(Builder $builder, ?array $id){
+        if(!empty($id)){
+            return $builder->whereNotIn('id', $id);
+        }
+    }
+
     public function scopeByUser(Builder $builder, int $user){
         return $builder->where('user_id', $user);
     }

@@ -11,11 +11,17 @@ class PostHelper extends Model
     const LIMIT = 5;
     const CACHE = 0;
 
-    public static function latest()
+    public static function latest($posts=null)
     {
-        return (Cache::remember('postTableLatest', self::CACHE, function() {
+        if($posts) {
+            $posts = $posts->pluck('id')->toArray();
+        }
+
+        return (Cache::remember('postTableLatest', self::CACHE, function() use($posts) {
             return (new Post)
             ->order(true)
+            ->with(['categories', 'user'])
+            ->notPost($posts)
             ->take(4)
             ->get();
         }));
@@ -26,7 +32,7 @@ class PostHelper extends Model
         return (Cache::remember('postCategoryTableLatest' . request('page', 1), 60, function() use($slug) {
             return (new Post)
             ->select(["posts.*"])
-            ->with(['categories', 'comments', 'user'])
+            ->with(['categories', 'comments.user', 'user'])
             ->order(true)
             ->byCategory($slug)
             ->paginate(self::LIMIT);
@@ -57,7 +63,7 @@ class PostHelper extends Model
 
     public static function comments(Post $post){
         return (Cache::remember('postCommentsTableLatest' . request('page', 1), self::CACHE, function() use($post) {
-            return $post->comments()->paginate(self::LIMIT);
+            return $post->with(['user'])->comments()->paginate(self::LIMIT);
         }));
     }
 
