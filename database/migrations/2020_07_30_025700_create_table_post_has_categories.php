@@ -20,7 +20,7 @@ class CreateTablePostHasCategories extends Migration
             $table->primary(['post_id', 'category_id']);
 
             $table->foreign('post_id')->references('id')->on('posts')->onDelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('restrict');
         });
     }
 

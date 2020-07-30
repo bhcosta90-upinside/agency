@@ -13,8 +13,8 @@ class PostSeeder extends Seeder
     {
         $total = rand(5, 10);
 
-        $tags = factory(\App\Models\Tag::class, $total)->create()->toArray();
-        $categories = factory(\App\Models\Category::class, $total)->create()->toArray();
+        $tags = factory(\App\Models\Tag::class, $total)->create()->pluck('id')->toArray();
+        $categories = factory(\App\Models\Category::class, $total)->create()->pluck('id')->toArray();
 
         factory(\App\User::class, 3)->create([
 
@@ -22,20 +22,16 @@ class PostSeeder extends Seeder
             factory(\App\Models\Post::class, rand(10, 30))->create([
                 'user_id' => $user->id,
             ])->each(function($post) use($tags, $total, $categories, $user) {
-                $tagPost = array_map(function($item){
-                    return $item['id'];
-                }, \Illuminate\Support\Arr::random($tags, rand(2, $total)));
 
-                $categoryPost = array_map(function($item){
-                    return $item['id'];
-                }, \Illuminate\Support\Arr::random($categories, rand(1, 2)));
+                $tagPost = \Illuminate\Support\Arr::random($tags, rand(2, $total));
+                $categoryPost = \Illuminate\Support\Arr::random($categories, rand(1, 2));
 
                 $post->tags()->sync($tagPost);
                 $post->categories()->sync($categoryPost);
 
                 factory(\App\Models\Comments::class, rand(20, 50))->create([
                     'user_id' => $user->id,
-                    'item_type' => \App\Post::class,
+                    'item_type' => \App\Models\Post::class,
                     'item_id' => $post->id,
                 ]);
             });
