@@ -67,7 +67,7 @@
                                     <div class="post-tag">
                                         <a href="{{ route('category', $banner->categories->first()->slug) }}" data-animation="fadeInUp">{{ $banner->categories->first()->category }}</a>
                                     </div>
-                                    <h2 data-animation="fadeInUp" data-delay="250ms"><a href="{{ route('post', $banner->slug) }}">{{ $banner->title }}</a></h2>
+                                    <h2 data-animation="fadeInUp" data-delay="250ms"><a href="{{ route('post', $banner->slug) }}">{{ $banner->id }}</a></h2>
                                 </div>
                             </div>
                         </div>
@@ -81,7 +81,7 @@
 
 <!-- ##### Blog Wrapper Start ##### -->
 <div class="blog-wrapper section-padding-100 clearfix">
-    @if(!isset($principal) && !isset($last))
+    @if(isset($principal) && isset($last))
         <div class="container">
             <div class="row align-items-end">
                 <!-- Single Blog Area -->

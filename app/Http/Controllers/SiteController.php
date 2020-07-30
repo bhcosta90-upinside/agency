@@ -13,7 +13,7 @@ class SiteController
 {
     public function home()
     {
-        $postsAll = Post::order(false)->with(['categories', 'comments'])->limit(15)->get();
+        $postsAll = Post::order(false)->with(['categories', 'comments', 'user'])->limit(15)->get();
 
         $banners = [];
         $latests = [];

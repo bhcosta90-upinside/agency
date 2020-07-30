@@ -90,27 +90,9 @@
                                 </li> --}}
                                 <li><a href="#">{{ __('Category') }}</a>
                                     <ul class="dropdown">
-                                        <li><a href="#">Catagory 1</a></li>
-                                        <li><a href="#">Catagory 1</a></li>
-                                        <li><a href="#">Catagory 1</a>
-                                            <ul class="dropdown">
-                                                <li><a href="#">Catagory 2</a></li>
-                                                <li><a href="#">Catagory 2</a></li>
-                                                <li><a href="#">Catagory 2</a>
-                                                    <ul class="dropdown">
-                                                        <li><a href="#">Catagory 3</a></li>
-                                                        <li><a href="#">Catagory 3</a></li>
-                                                        <li><a href="#">Catagory 3</a></li>
-                                                        <li><a href="#">Catagory 3</a></li>
-                                                        <li><a href="#">Catagory 3</a></li>
-                                                    </ul>
-                                                </li>
-                                                <li><a href="#">Catagory 2</a></li>
-                                                <li><a href="#">Catagory 2</a></li>
-                                            </ul>
-                                        </li>
-                                        <li><a href="#">Catagory 1</a></li>
-                                        <li><a href="#">Catagory 1</a></li>
+                                        @foreach (\App\Helpers\CategoryHelper::home() as $category)
+                                            <li><a href="{{ route('category', $category->slug) }}">{{ $category->category }}</a></li>
+                                        @endforeach
                                     </ul>
                                 </li>
                                 <li><a href="{{ route('about') }}">{{ __('About Us') }}</a></li>
