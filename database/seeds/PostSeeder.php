@@ -33,7 +33,7 @@ class PostSeeder extends Seeder
                 $post->tags()->sync($tagPost);
                 $post->categories()->sync($categoryPost);
 
-                factory(\App\Models\Comments::class, rand(15, 50))->create([
+                factory(\App\Models\Comments::class, rand(20, 50))->create([
                     'user_id' => $user->id,
                     'item_type' => \App\Post::class,
                     'item_id' => $post->id,
