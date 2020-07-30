@@ -9,6 +9,7 @@ $(function(){
             data: $(this).serializeArray(),
             dataType: "json"
         }).success(function(json){
+            $('#subsModal .close').trigger("click");
             alert(json.msg)
             form[0].reset()
         }).error(function(a, b, c){

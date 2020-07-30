@@ -36,7 +36,8 @@
                 </button>
                 <div class="modal-body">
                     <h5 class="title">{{ __('Subscribe to my newsletter') }}</h5>
-                    <form action="#" class="newsletterForm" method="post">
+                    <form action="{{ route('api.newsletter') }}" method='post' class="newsletterForm">
+                        @csrf
                         <input type="email" name="email" id="subscribesForm2" placeholder="{{ __("Your e-mail here") }}">
                         <button type="submit" class="btn original-btn">{{ __('Subscribe') }}</button>
                     </form>
@@ -138,7 +139,8 @@
 
                     <!-- Widget Area -->
                     <div class="sidebar-widget-area">
-                        <form action="#" class="search-form">
+                        <form action="{{ route('api.newsletter') }}" method='post' class="search-form">
+                            @csrf
                             <input type="search" name="search" id="searchForm" placeholder="Search">
                             <input type="submit" value="submit">
                         </form>
