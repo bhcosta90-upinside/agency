@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Post extends Model
 {
@@ -28,5 +29,12 @@ class Post extends Model
     public function comments()
     {
         return $this->morphMany(Comments::class, 'item');
+    }
+
+    public function scopeOrder(Builder $builder)
+    {
+        return $builder
+            ->orderBy('created_at', 'DESC')
+            ->orderBy('id', 'DESC');
     }
 }

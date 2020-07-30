@@ -12,5 +12,6 @@ $factory->define(Post::class, function (Faker $faker) {
         'slug' => str_slug($title),
         'subtitle' => $faker->sentence(25),
         'description' => $faker->paragraph(70),
+        'cover' => $faker->image('storage/images', 1200, 1000, null, false)
     ];
 });

@@ -20,6 +20,7 @@ class CreatePostsTable extends Migration
             $table->text('subtitle');
             $table->string('slug')->unique();
             $table->text('description');
+            $table->string('cover')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')->on('users')->references(
