@@ -25,12 +25,9 @@
                             <!-- Nav Start -->
                             <div class="classynav">
                                 <ul>
-                                    <li><a href="#">Home</a></li>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Lifestyle</a></li>
-                                    <li><a href="#">travel</a></li>
-                                    <li><a href="#">Music</a></li>
-                                    <li><a href="#">Contact</a></li>
+                                    <li><a href="{{ route('home') }}">{{ __('Home') }}</a></li>
+                                    <li><a href="{{ route('about') }}">{{ __('About Us') }}</a></li>
+                                    <li><a href="{{ route('contact') }}">{{ __('Contact') }}</a></li>
                                 </ul>
                             </div>
                             <!-- Nav End -->
@@ -52,7 +49,7 @@
     </div>
 
     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-    Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+    {{ __('Copyright') }} &copy;<script>document.write(new Date().getFullYear());</script> {{ __('All rights reserved') }}
     <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
 </footer>

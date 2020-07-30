@@ -895,6 +895,8 @@ img {
             h4 {
                 margin-bottom: 10px;
                 line-height: 1;
+                max-height: 45px;
+                overflow: hidden;
                 .post-headline {
                     font-size: 16px;
                     color: $color-dark;

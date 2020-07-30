@@ -20,7 +20,10 @@ mix.js('resources/js/app.js', 'public/js')
         'resources/frontend/js/bootstrap.min.js',
         'resources/frontend/js/plugins.js',
     ], 'public/frontend/js/vendor.js')
-    .scripts('resources/frontend/js/active.js', 'public/frontend/js/main.js')
+    .scripts([
+        'resources/frontend/js/active.js',
+        'resources/frontend/js/custom.js'
+    ], 'public/frontend/js/main.js')
     .sass('resources/frontend/scss/style.scss', 'public/frontend/css')
     .copyDirectory('resources/frontend/img', 'public/frontend/img')
     .copyDirectory('resources/frontend/fonts', 'public/frontend/fonts')

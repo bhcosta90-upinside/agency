@@ -35,10 +35,10 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
                 </button>
                 <div class="modal-body">
-                    <h5 class="title">Subscribe to my newsletter</h5>
+                    <h5 class="title">{{ __('Subscribe to my newsletter') }}</h5>
                     <form action="#" class="newsletterForm" method="post">
-                        <input type="email" name="email" id="subscribesForm2" placeholder="Your e-mail here">
-                        <button type="submit" class="btn original-btn">Subscribe</button>
+                        <input type="email" name="email" id="subscribesForm2" placeholder="{{ __("Your e-mail here") }}">
+                        <button type="submit" class="btn original-btn">{{ __('Subscribe') }}</button>
                     </form>
                 </div>
             </div>
@@ -65,9 +65,9 @@
                             <div class="col-12">
                                 <div class="slide-content text-center">
                                     <div class="post-tag">
-                                        <a href="#" data-animation="fadeInUp">{{ $banner->categories->first()->category }}</a>
+                                        <a href="{{ route('category', $banner->categories->first()->slug) }}" data-animation="fadeInUp">{{ $banner->categories->first()->category }}</a>
                                     </div>
-                                    <h2 data-animation="fadeInUp" data-delay="250ms"><a href="single-post.html">{{ $banner->title }}</a></h2>
+                                    <h2 data-animation="fadeInUp" data-delay="250ms"><a href="{{ route('post', $banner->slug) }}">{{ $banner->title }}</a></h2>
                                 </div>
                             </div>
                         </div>
@@ -81,45 +81,50 @@
 
 <!-- ##### Blog Wrapper Start ##### -->
 <div class="blog-wrapper section-padding-100 clearfix">
-    <div class="container">
-        <div class="row align-items-end">
-            <!-- Single Blog Area -->
-            @isset($principal)
-                <div class="col-12 col-lg-4">
-                    <div class="single-blog-area clearfix mb-100">
-                        <!-- Blog Content -->
-                        <div class="single-blog-content">
-                            <div class="line"></div>
-                            <a href="#" class="post-tag">{{ $principal->categories->first()->category }}</a>
-                            <h4><a href="#" class="post-headline">{{ $principal->title }}</a></h4>
-                            <p>{{ $principal->subtitle }}</p>
-                            <a href="#" class="btn original-btn">Read More</a>
+    @if(!isset($principal) && !isset($last))
+        <div class="container">
+            <div class="row align-items-end">
+                <!-- Single Blog Area -->
+                @isset($principal)
+                    <div class="col-12 col-lg-4">
+                        <div class="single-blog-area clearfix mb-100">
+                            <!-- Blog Content -->
+                            <div class="single-blog-content">
+                                <div class="line"></div>
+                                <a href="{{ route('category', $principal->categories->first()->slug) }}" class="post-tag">{{ $principal->categories->first()->category }}</a>
+                                <h4><a href="{{ route('post', $principal->slug) }}" class="post-headline">{{ $principal->title }}</a></h4>
+                                <p>{{ $principal->subtitle }}</p>
+                                <a href="{{ route('post', $principal->slug) }}" class="btn original-btn">{{ __('Read More') }}</a>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endisset
-            <!-- Single Blog Area -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-catagory-area clearfix mb-100">
-                    <img src="{{ asset('frontend/img/blog-img/1.jpg') }}" alt="">
-                    <!-- Catagory Title -->
-                    <div class="catagory-title">
-                        <a href="#">Lifestyle posts</a>
+                    <!-- Single Blog Area -->
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="single-catagory-area clearfix mb-100">
+                            <img src="{{ $principal->categories->first()->post->first()->thumb(350, 412) }}" alt="">
+                            <!-- Catagory Title -->
+                            <div class="catagory-title">
+                                <a href="{{ route('category', $principal->categories->first()->slug) }}">Categoria - {{ $principal->categories->first()->category }}</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <!-- Single Blog Area -->
-            <div class="col-12 col-md-6 col-lg-4">
-                <div class="single-catagory-area clearfix mb-100">
-                    <img src="{{ asset('frontend/img/blog-img/2.jpg') }}" alt="">
-                    <!-- Catagory Title -->
-                    <div class="catagory-title">
-                        <a href="#">latest posts</a>
+                @endisset
+                
+                <!-- Single Blog Area -->
+                @isset($last)
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="single-catagory-area clearfix mb-100">
+                            <img src="{{ $last->thumb(350, 412) }}" alt="">
+                            <!-- Catagory Title -->
+                            <div class="catagory-title">
+                                <a href="{{ route('posts') }}">{{ __('latest posts') }}</a>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                @endisset
             </div>
         </div>
-    </div>
+    @endif
 
     <div class="container">
         <div class="row">
@@ -141,114 +146,70 @@
 
                     <!-- Widget Area -->
                     <div class="sidebar-widget-area">
-                        <h5 class="title subscribe-title">Subscribe to my newsletter</h5>
+                        <h5 class="title subscribe-title">{{ __('Subscribe to my newsletter') }}</h5>
                         <div class="widget-content">
-                            <form action="#" class="newsletterForm">
-                                <input type="email" name="email" id="subscribesForm" placeholder="Your e-mail here">
-                                <button type="submit" class="btn original-btn">Subscribe</button>
+                            <form action="{{ route('api.newsletter') }}" method='post' class="newsletterForm">
+                                @csrf
+                                <input type="email" name="email" id="subscribesForm" placeholder="{{ __("Your e-mail here") }}">
+                                <button type="submit" class="btn original-btn">{{ __('Subscribe') }}</button>
                             </form>
                         </div>
                     </div>
 
                     <!-- Widget Area -->
                     <div class="sidebar-widget-area">
-                        <h5 class="title">Advertisement</h5>
+                        <h5 class="title">{{ __("Advertisement") }}</h5>
                         <a href="#"><img src="{{ asset('frontend/img/bg-img/add.gif') }}" alt=""></a>
                     </div>
 
                     <!-- Widget Area -->
                     <div class="sidebar-widget-area">
-                        <h5 class="title">Latest Posts</h5>
+                        <h5 class="title">{{ __('Latest Posts') }}</h5>
 
                         <div class="widget-content">
-
-                            <!-- Single Blog Post -->
-                            <div class="single-blog-post d-flex align-items-center widget-post">
-                                <!-- Post Thumbnail -->
-                                <div class="post-thumbnail">
-                                    <img src="{{ asset('frontend/img/blog-img/lp1.jpg') }}" alt="">
-                                </div>
-                                <!-- Post Content -->
-                                <div class="post-content">
-                                    <a href="#" class="post-tag">Lifestyle</a>
-                                    <h4><a href="#" class="post-headline">Party people in the house</a></h4>
-                                    <div class="post-meta">
-                                        <p><a href="#">12 March</a></p>
+                            @isset($latests)
+                                @foreach ($latests as $latest)
+                                    <div class="single-blog-post d-flex align-items-center widget-post">
+                                        <!-- Post Thumbnail -->
+                                        <div class="post-thumbnail">
+                                            <img src="{{ $latest->thumb(115) }}" alt="">
+                                        </div>
+                                        <!-- Post Content -->
+                                        <div class="post-content">
+                                            <a href="{{ route('category', $latest->categories->first()->slug) }}" class="post-tag">{{ $latest->categories->first()->category }}</a>
+                                            <h4><a href="{{ route('post', $latest->slug) }}" class="post-headline">{{ $latest->title }}</a></h4>
+                                            <div class="post-meta">
+                                                <p><a href="#">{{ date('d M', strtotime($post->created_at)) }}</a></p>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Blog Post -->
-                            <div class="single-blog-post d-flex align-items-center widget-post">
-                                <!-- Post Thumbnail -->
-                                <div class="post-thumbnail">
-                                    <img src="{{ asset('frontend/img/blog-img/lp2.jpg') }}" alt="">
-                                </div>
-                                <!-- Post Content -->
-                                <div class="post-content">
-                                    <a href="#" class="post-tag">Lifestyle</a>
-                                    <h4><a href="#" class="post-headline">A sunday in the park</a></h4>
-                                    <div class="post-meta">
-                                        <p><a href="#">12 March</a></p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Blog Post -->
-                            <div class="single-blog-post d-flex align-items-center widget-post">
-                                <!-- Post Thumbnail -->
-                                <div class="post-thumbnail">
-                                    <img src="{{ asset('frontend/img/blog-img/lp3.jpg') }}" alt="">
-                                </div>
-                                <!-- Post Content -->
-                                <div class="post-content">
-                                    <a href="#" class="post-tag">Lifestyle</a>
-                                    <h4><a href="#" class="post-headline">Party people in the house</a></h4>
-                                    <div class="post-meta">
-                                        <p><a href="#">12 March</a></p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Single Blog Post -->
-                            <div class="single-blog-post d-flex align-items-center widget-post">
-                                <!-- Post Thumbnail -->
-                                <div class="post-thumbnail">
-                                    <img src="{{ asset('frontend/img/blog-img/lp4.jpg') }}" alt="">
-                                </div>
-                                <!-- Post Content -->
-                                <div class="post-content">
-                                    <a href="#" class="post-tag">Lifestyle</a>
-                                    <h4><a href="#" class="post-headline">A sunday in the park</a></h4>
-                                    <div class="post-meta">
-                                        <p><a href="#">12 March</a></p>
-                                    </div>
-                                </div>
-                            </div>
+                                @endforeach
+                            @endisset
                         </div>
                     </div>
 
                     <!-- Widget Area -->
+                    @isset($tags)
                     <div class="sidebar-widget-area">
                         <h5 class="title">Tags</h5>
                         <div class="widget-content">
                             <ul class="tags">
-                                <li><a href="#">design</a></li>
-                                <li><a href="#">fashion</a></li>
-                                <li><a href="#">travel</a></li>
-                                <li><a href="#">music</a></li>
-                                <li><a href="#">party</a></li>
-                                <li><a href="#">video</a></li>
-                                <li><a href="#">photography</a></li>
-                                <li><a href="#">adventure</a></li>
+                                @foreach ($tags as $tag)
+                                    <li><a href="{{ route('posts', ['tags' => [$tag->slug]]) }}">{{ $tag->tag }}</a></li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
+                    @endisset
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+@include('includes.footer')
+
+
 <script src="{{ asset('frontend/js/vendor.js') }}"></script>
 <script src="{{ asset('frontend/js/main.js') }}"></script>
 

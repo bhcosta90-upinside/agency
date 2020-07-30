@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Suport\Cropper;
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -31,6 +33,11 @@ class Post extends Model
         return $this->morphMany(Comments::class, 'item');
     }
 
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function scopeOrder(Builder $builder, $order = false)
     {
         if($order){
@@ -40,7 +47,15 @@ class Post extends Model
         }
     }
 
+    private function getImage(){
+        return "posts/". $this->id. ".jpg";
+    }
+
     public function getImageAttribute(){
-        return $this->cover ?? asset("/storage/post/". $this->id. ".jpg");
+        return $this->cover ?? asset("img/" . $this->getImage());
+    }
+
+    public function thumb(int $width, int $height = null){
+        return asset('frontend/img/' . Cropper::thumb(public_path('frontend/img/' . $this->getImage()), $width, $height));
     }
 }

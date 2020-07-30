@@ -13,4 +13,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'SiteController@home');
+Route::get('/', 'SiteController@home')->name('home');
+Route::get('/artigos', 'SiteController@posts')->name('posts');
+Route::get('/artigo/{slug}', 'SiteController@post')->name('post');
+Route::get('/categoria/{slug}', 'SiteController@category')->name('category');
+Route::get('/contato', 'SiteController@contact')->name('contact');
+Route::get('/sobre', 'SiteController@about')->name('about');
+Route::get('/artigos/usuario/{user}', 'SiteController@postUsuario')->name('post-user');

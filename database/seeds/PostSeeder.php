@@ -19,7 +19,7 @@ class PostSeeder extends Seeder
         factory(\App\User::class, 3)->create([
 
         ])->each(function ($user) use($tags, $total, $categories) {
-            factory(\App\Models\Post::class, rand(10, 30))->create([
+            factory(\App\Models\Post::class, 17)->create([
                 'user_id' => $user->id,
             ])->each(function($post) use($tags, $total, $categories, $user) {
 

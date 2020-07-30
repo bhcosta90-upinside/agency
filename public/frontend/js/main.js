@@ -1,1 +1,165 @@
-!function(a){"use strict";var t=a(window);if(t.on("load",function(){a("#preloader").fadeOut("slow",function(){a(this).remove()})}),a.fn.classyNav&&(a("#originalNav").classyNav(),a("#footerNav").classyNav()),a.fn.simpleTicker&&a.simpleTicker(a("#breakingNewsTicker"),{speed:1e3,delay:3500,easing:"swing",effectType:"roll"}),a('[data-toggle="tooltip"]').tooltip(),a.fn.owlCarousel){var i=a(".hero-slides");i.owlCarousel({items:2,margin:30,loop:!0,center:!0,autoplay:!0,nav:!0,navText:['<i class="fa fa-angle-left"></i>','<i class="fa fa-angle-right"></i>'],autoplayTimeout:5e3,smartSpeed:2e3}),i.on("translate.owl.carousel",function(){a("[data-animation]").each(function(){var t=a(this).data("animation");a(this).removeClass("animated "+t).css("opacity","0")})}),i.on("translated.owl.carousel",function(){i.find(".owl-item.active").find("[data-animation]").each(function(){var t=a(this).data("animation");a(this).addClass("animated "+t).css("opacity","1")})}),a("[data-delay]").each(function(){var t=a(this).data("delay");a(this).css("animation-delay",t)}),a("[data-duration]").each(function(){var t=a(this).data("duration");a(this).css("animation-duration",t)}),a(".instagram-slides").owlCarousel({items:7,margin:0,loop:!0,autoplay:!0,autoplayHoverPause:!0,autoplayTimeout:2e3,smartSpeed:2e3,responsive:{0:{items:2},480:{items:3},576:{items:4},992:{items:5},1500:{items:7}}})}a.fn.sticky&&a("#stickyNav").sticky({topSpacing:0}),a.fn.countdown&&a("#clock").countdown("2020/10/10",function(t){a(this).html(t.strftime("<div>%D <span>Days</span></div> <div>%H <span>Hours</span></div> <div>%M <span>Minutes</span></div> <div>%S <span>Seconds</span></div>"))}),a.fn.counterUp&&a(".counter").counterUp({delay:10,time:2e3}),a.fn.scrollUp&&a.scrollUp({scrollSpeed:1e3,easingType:"easeInOutQuart",scrollText:"Top"}),a("a[href='#']").on("click",function(a){a.preventDefault()}),t.width()>767&&(new WOW).init()}(jQuery);
+(function ($) {
+    'use strict';
+
+    var $window = $(window);
+
+    // :: Preloader Active Code
+    $window.on('load', function () {
+        $('#preloader').fadeOut('slow', function () {
+            $(this).remove();
+        });
+    });
+
+    // :: Nav Active Code
+    if ($.fn.classyNav) {
+        $('#originalNav').classyNav();
+        $('#footerNav').classyNav();
+    }
+
+    // :: Newsticker Active Code
+    if ($.fn.simpleTicker) {
+        $.simpleTicker($("#breakingNewsTicker"), {
+            speed: 1000,
+            delay: 3500,
+            easing: 'swing',
+            effectType: 'roll'
+        });
+    }
+
+    // :: Tooltip Active Code
+    $('[data-toggle="tooltip"]').tooltip();
+
+    // :: Owl Carousel Active Code
+    if ($.fn.owlCarousel) {
+        var welcomeSlide = $('.hero-slides');
+        welcomeSlide.owlCarousel({
+            items: 2,
+            margin: 30,
+            loop: true,
+            center: true,
+            autoplay: true,
+            nav: true,
+            navText: ['<i class="fa fa-angle-left"></i>', '<i class="fa fa-angle-right"></i>'],
+            autoplayTimeout: 5000, // Autoplay Timeout 1s = 1000ms
+            smartSpeed: 2000
+        });
+
+        welcomeSlide.on('translate.owl.carousel', function () {
+            var slideLayer = $("[data-animation]");
+            slideLayer.each(function () {
+                var anim_name = $(this).data('animation');
+                $(this).removeClass('animated ' + anim_name).css('opacity', '0');
+            });
+        });
+
+        welcomeSlide.on('translated.owl.carousel', function () {
+            var slideLayer = welcomeSlide.find('.owl-item.active').find("[data-animation]");
+            slideLayer.each(function () {
+                var anim_name = $(this).data('animation');
+                $(this).addClass('animated ' + anim_name).css('opacity', '1');
+            });
+        });
+
+        $("[data-delay]").each(function () {
+            var anim_del = $(this).data('delay');
+            $(this).css('animation-delay', anim_del);
+        });
+
+        $("[data-duration]").each(function () {
+            var anim_dur = $(this).data('duration');
+            $(this).css('animation-duration', anim_dur);
+        });
+
+        $('.instagram-slides').owlCarousel({
+            items: 7,
+            margin: 0,
+            loop: true,
+            autoplay: true,
+            autoplayHoverPause: true,
+            autoplayTimeout: 2000, // Autoplay Timeout 1s = 1000ms
+            smartSpeed: 2000,
+            responsive: {
+                0: {
+                    items: 2
+                },
+                480: {
+                    items: 3
+                },
+                576: {
+                    items: 4
+                },
+                992: {
+                    items: 5
+                },
+                1500: {
+                    items: 7
+                }
+            }
+        });
+    }
+
+    // :: Sticky Active Code
+    if ($.fn.sticky) {
+        $("#stickyNav").sticky({
+            topSpacing: 0
+        });
+    }
+
+    // :: Countdown Active Code
+    if ($.fn.countdown) {
+        $('#clock').countdown('2020/10/10', function (event) {
+            $(this).html(event.strftime('<div>%D <span>Days</span></div> <div>%H <span>Hours</span></div> <div>%M <span>Minutes</span></div> <div>%S <span>Seconds</span></div>'));
+        });
+    }
+
+    // :: CounterUp Active Code
+    if ($.fn.counterUp) {
+        $('.counter').counterUp({
+            delay: 10,
+            time: 2000
+        });
+    }
+
+    // :: ScrollUp Active Code
+    if ($.fn.scrollUp) {
+        $.scrollUp({
+            scrollSpeed: 1000,
+            easingType: 'easeInOutQuart',
+            scrollText: 'Top'
+        });
+    }
+
+    // :: PreventDefault a Click
+    $("a[href='#']").on('click', function ($) {
+        $.preventDefault();
+    });
+
+    // :: WOW Active Code
+    if ($window.width() > 767) {
+        new WOW().init();
+    }
+
+})(jQuery);
+$(function(){
+    $('.newsletterForm').submit(function(e){
+        e.preventDefault();
+        const form = $(this);
+
+        $.ajax({
+            url: $(this).prop('action'),
+            method: $(this).prop('method'),
+            data: $(this).serializeArray(),
+            dataType: "json"
+        }).success(function(json){
+            alert(json.msg)
+            form[0].reset()
+        }).error(function(a, b, c){
+            const data = a.responseJSON;
+            const msg = data.errors;
+
+            if(msg.email[0] == "validation.unique"){
+                alert('Este e-mail já existe em nossa base de dados')
+            }
+        });
+    });
+})
