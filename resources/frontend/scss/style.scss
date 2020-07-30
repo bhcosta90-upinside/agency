@@ -934,6 +934,7 @@ img {
             line-height: 43px;
             margin: 5px;
             &:hover,
+            &.active,
             &:focus {
                 border: 1px solid $hover-color;
                 color: $color-white;

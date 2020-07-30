@@ -18,6 +18,26 @@ class Post extends Model
         });
     }
 
+    public function scopeByCategory(Builder $builder, string $slug)
+    {
+        if (!empty($slug)) {
+            $builder->join('post_has_categories', 'post_has_categories.post_id', '=', 'posts.id')
+                ->join('categories', 'categories.id', "=", "post_has_categories.category_id")
+                ->where('categories.slug', $slug);
+        }
+    }
+
+    public function scopeBySlug(Builder $builder, string $slug){
+        return $builder->where('slug', $slug);
+    }
+    public function scopeByTags(Builder $builder, array $tags){
+        if (!empty($tags)) {
+            $builder->join('post_has_tags', 'post_has_tags.tag_id', '=', 'posts.id')
+                ->join('tags', 'tags.id', "=", "post_has_tags.tag_id")
+                ->whereIn('tags.slug', $tags);
+        }
+    }
+
     public function tags()
     {
         return $this->belongsToMany(Tag::class, 'post_has_tags', 'post_id', 'tag_id');
@@ -48,7 +68,7 @@ class Post extends Model
     }
 
     private function getImage(){
-        return "posts/". $this->id. ".jpg";
+        return "posts/". (($this->id % 17) + 1) . ".jpg";
     }
 
     public function getImageAttribute(){

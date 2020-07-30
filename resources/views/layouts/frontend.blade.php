@@ -139,9 +139,8 @@
 
                     <!-- Widget Area -->
                     <div class="sidebar-widget-area">
-                        <form action="{{ route('api.newsletter') }}" method='post' class="search-form">
-                            @csrf
-                            <input type="search" name="search" id="searchForm" placeholder="Search">
+                        <form action="{{ route('posts') }}" method='get' class="search-form">
+                            <input type="search" name="search" id="searchForm" placeholder="{{ __('Search') }}">
                             <input type="submit" value="submit">
                         </form>
                     </div>
@@ -165,11 +164,11 @@
                     </div>
 
                     <!-- Widget Area -->
-                    <div class="sidebar-widget-area">
-                        <h5 class="title">{{ __('Latest Posts') }}</h5>
+                    @isset($latests)
+                        <div class="sidebar-widget-area">
+                            <h5 class="title">{{ __('Latest Posts') }}</h5>
 
-                        <div class="widget-content">
-                            @isset($latests)
+                            <div class="widget-content">
                                 @foreach ($latests as $latest)
                                     <div class="single-blog-post d-flex align-items-center widget-post">
                                         <!-- Post Thumbnail -->
@@ -181,28 +180,33 @@
                                             <a href="{{ route('category', $latest->categories->first()->slug) }}" class="post-tag">{{ $latest->categories->first()->category }}</a>
                                             <h4><a href="{{ route('post', $latest->slug) }}" class="post-headline">{{ $latest->title }}</a></h4>
                                             <div class="post-meta">
-                                                <p><a href="#">{{ date('d M', strtotime($post->created_at)) }}</a></p>
+                                                <p><a href="#">{{ date('d M', strtotime($latest->created_at)) }}</a></p>
                                             </div>
                                         </div>
                                     </div>
                                 @endforeach
-                            @endisset
+                            </div>
                         </div>
-                    </div>
+                    @endisset
 
                     <!-- Widget Area -->
-                    @isset($tags)
                     <div class="sidebar-widget-area">
                         <h5 class="title">Tags</h5>
                         <div class="widget-content">
                             <ul class="tags">
-                                @foreach ($tags as $tag)
-                                    <li><a href="{{ route('posts', ['tags' => [$tag->slug]]) }}">{{ $tag->tag }}</a></li>
+                                @foreach (App\Helpers\TagHelper::home(request('tags')) as $tag)
+                                    <li>
+                                        <a class='{{ $tag->active ? "active" : "" }}' 
+                                            href="{{ route('posts', [
+                                                'tags' => $tag->active 
+                                                    ? array_diff(request('tags', []), [$tag->slug]) 
+                                                    : array_merge(request('tags', []), [$tag->slug])
+                                            ]) }}">{{ $tag->tag }}</a>
+                                    </li>
                                 @endforeach
                             </ul>
                         </div>
                     </div>
-                    @endisset
                 </div>
             </div>
         </div>

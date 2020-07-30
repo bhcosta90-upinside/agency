@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\TagHelper;
+use App\Helpers\PostHelper;
 use App\Http\Requests\NewsletterRequest;
 use App\Models\Newsletter;
-use Illuminate\Database\Eloquent\Collection;
-
 use App\Models\Post;
+use Illuminate\Http\Request;
 
 class SiteController
 {
@@ -39,7 +38,6 @@ class SiteController
             'banners' => $banners,
             'posts' => $posts,
             'latests' => $latests,
-            'tags' => TagHelper::home(),
             "principal" => $principal,
             'last' => $last
         ]);
@@ -50,5 +48,30 @@ class SiteController
         $obj = Newsletter::create($request->all());
 
         return ['msg' => __('E-mail cadastrado com sucesso'), "id" => $obj->id];
+    }
+
+    public function category($slug){
+        return view('frontend.posts', [
+            'latests' => PostHelper::latest(),
+            'posts' => PostHelper::byCategory($slug)
+        ]);
+    }
+
+    public function posts(Request $request){
+        return view('frontend.posts', [
+            'latests' => PostHelper::latest(),
+            'posts' => PostHelper::byPost($request->all())
+        ]);
+    }
+
+    public function post($slug){
+        $post = PostHelper::post($slug);
+        $comments = PostHelper::comments($post);
+        
+        return view('frontend.post', [
+            'latests' => PostHelper::latest(),
+            'post' => $post,
+            'comments' => $comments,
+        ]);
     }
 }
