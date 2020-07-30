@@ -88,7 +88,7 @@
                         </div>
                     </div>
                     <div class="col-12">
-                        <button type="submit" class="btn original-btn">{{ __('commentary') }}</button>
+                        <button type="submit" class="btn original-btn">{{ __('Comment') }}</button>
                     </div>
                 </div>
             </form>
