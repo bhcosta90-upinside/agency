@@ -8,14 +8,36 @@ class SiteController
 {
     public function home()
     {
-        $banners = Post::order()->limit(5)->get();
-        $posts = Post::order()->limit(6)->offset(5)->get();
-        $latests = Post::order()->limit(5)->offset(11)->get();
+        $postsAll = Post::order(false)->with(['tags', 'categories'])->limit(15)->get();
+
+        $banners = [];
+        $latests = [];
+        $posts = [];
+        $tags = [];
+        $principal = false;
+
+        foreach ($postsAll as $k => $v) {
+            if($k < 5){
+                $banners[] = $v;
+            } else if($k == 5){
+                $principal = $v;
+            } else if($k < 11){
+                $posts[] = $v;
+            } else{
+                $latests[] = $v;
+            }
+
+            $tags = array_merge($tags, $v->tags()->pluck('tag', 'id')->toArray());
+        }
+
+        $tags = array_values(array_unique($tags));
 
         return view('frontend.home', [
             'banners' => $banners,
             'posts' => $posts,
-            'latests' => $latests
+            'latests' => $latests,
+            'tags' => $tags,
+            "principal" => $principal,
         ]);
     }
 }

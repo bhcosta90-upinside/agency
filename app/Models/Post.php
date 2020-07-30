@@ -23,7 +23,7 @@ class Post extends Model
 
     public function categories()
     {
-        return $this->belongsToMany(Tag::class, 'post_has_categories', 'post_id', 'category_id');
+        return $this->belongsToMany(Category::class, 'post_has_categories', 'post_id', 'category_id');
     }
 
     public function comments()
@@ -31,10 +31,16 @@ class Post extends Model
         return $this->morphMany(Comments::class, 'item');
     }
 
-    public function scopeOrder(Builder $builder)
+    public function scopeOrder(Builder $builder, $order = false)
     {
-        return $builder
-            ->orderBy('created_at', 'DESC')
-            ->orderBy('id', 'DESC');
+        if($order){
+            return $builder
+                ->orderBy('created_at', 'DESC')
+                ->orderBy('id', 'DESC');
+        }
+    }
+
+    public function getImageAttribute(){
+        return $this->cover ?? asset("/storage/post/". $this->id. ".jpg");
     }
 }
